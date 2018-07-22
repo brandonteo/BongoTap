@@ -8,21 +8,42 @@
     <link rel="stylesheet" href="/style.css">
 
     <script src="/paper-full.min.js"></script>
+    <script src="/howler.min.js"></script>
     <script type="text/paperscript" canvas="myCanvas">
 
-    function myRandom(num1, num2) {
-        return Math.floor(num1 + (Math.random() * (num2 - num1)));
-    }
+    var soundLib = {
+        a:["/sounds/bubbles.mp3"], b:["/sounds/clay.mp3"], c:["/sounds/confetti.mp3"], d:["/sounds/corona.mp3"], e:["/sounds/dotted-spiral.mp3"],
+        f:["/sounds/flash-1.mp3"], g:["/sounds/flash-2.mp3"], h:["/sounds/flash-3.mp3"], i:["/sounds/glimmer.mp3"], j:["/sounds/moon.mp3"],
+        k:["/sounds/pinwheel.mp3"], l:["/sounds/piston-1.mp3"], m:["/sounds/piston-2.mp3"], n:["/sounds/piston-3.mp3"], o:["/sounds/prism-1.mp3"],
+        p:["/sounds/prism-2.mp3"], q:["/sounds/prism-3.mp3"], r:["/sounds/splits.mp3"], s:["/sounds/squiggle.mp3"], t:["/sounds/strike.mp3"],
+        u:["/sounds/suspension.mp3"], v:["/sounds/timer.mp3"], w:["/sounds/ufo.mp3"], x:["/sounds/veil.mp3"], y:["/sounds/wipe.mp3"],
+        z:["/sounds/zig-zag.mp3"]
+    };
 
+    var bongoLib = {
+        a:["/sounds/bongo_1.wav"], b:["/sounds/bongo_2.wav"], c:["/sounds/bongo_3.wav"], d:["/sounds/bongo_4.wav"], e:["/sounds/bongo_5.wav"],
+        f:["/sounds/bongo_6.wav"], g:["/sounds/bongo_7.wav"], h:["/sounds/bongo_8.wav"], i:["/sounds/bongo_9.wav"], j:["/sounds/bongo_10.wav"],
+        k:["/sounds/bongo_11.wav"], l:["/sounds/bongo_12.wav"], m:["/sounds/bongo_13.wav"], n:["/sounds/bongo_14.wav"], o:["/sounds/bongo_15.wav"],
+        p:["/sounds/bongo_16.wav"], q:["/sounds/bongo_17.wav"], r:["/sounds/bongo_18.wav"], s:["/sounds/bongo_19.wav"], t:["/sounds/bongo_19.wav"],
+        u:["/sounds/bongo_18.wav"], v:["/sounds/bongo_17.wav"], w:["/sounds/bongo_16.wav"], x:["/sounds/bongo_15.wav"], y:["/sounds/bongo_14.wav"],
+        z:["/sounds/bongo_13.wav"]
+    };
+
+    // CHANGE THE SOUNDPACK HERE
+    var usedLib = bongoLib
     var circles = [];
     function onKeyDown(event) {
-        var minRadius = 100;
-        var maxRadius = 500;
-        var x = myRandom(0, view.size.width);
-        var y = myRandom(0, view.size.height);
-        var currCircle = new Path.Circle(new Point(x, y), myRandom(minRadius, maxRadius));
-        currCircle.fillColor = "rgb(" + myRandom(50, 256) + ", " + myRandom(50, 256) + ", " + myRandom(50, 256) + ")";
-        circles.push(currCircle);
+        if(usedLib[event.key]) {
+            var minRadius = 100;
+            var maxRadius = 500;
+            var x = myRandom(0, view.size.width);
+            var y = myRandom(0, view.size.height);
+            var currCircle = new Path.Circle(new Point(x, y), myRandom(minRadius, maxRadius));
+            currCircle.fillColor = "rgb(" + myRandom(50, 256) + ", " + myRandom(50, 256) + ", " + myRandom(50, 256) + ")";
+            circles.push(currCircle);
+
+            new Howl({src: usedLib[event.key]}).play();
+        }
     }
 
     function onFrame(event) {
@@ -36,6 +57,10 @@
                 i--;
             }
         }
+    }
+
+    function myRandom(num1, num2) {
+        return Math.floor(num1 + (Math.random() * (num2 - num1)));
     }
 
     </script>
