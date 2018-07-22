@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>BongoTap</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="/style.css">
+
+    <script src="/paper-full.min.js"></script>
+    <script type="text/paperscript" canvas="myCanvas">
+
+    function myRandom(num1, num2) {
+        return Math.floor(num1 + (Math.random() * (num2 - num1)));
+    }
+
+    var circles = [];
+    function onKeyDown(event) {
+        var minRadius = 100;
+        var maxRadius = 500;
+        var x = myRandom(0, view.size.width);
+        var y = myRandom(0, view.size.height);
+        var currCircle = new Path.Circle(new Point(x, y), myRandom(minRadius, maxRadius));
+        currCircle.fillColor = "rgb(" + myRandom(50, 256) + ", " + myRandom(50, 256) + ", " + myRandom(50, 256) + ")";
+        circles.push(currCircle);
+    }
+
+    function onFrame(event) {
+        for(var i = 0; i < circles.length; i++) {
+            circles[i].fillColor.hue += 1;
+            circles[i].scale(0.90);
+
+            if(circles[i].area < 1) {
+                circles[i].remove();
+                circles.splice(i, 1);
+                i--;
+            }
+        }
+    }
+
+    </script>
+</head>
+<body>
+    <canvas id="myCanvas" resize></canvas>
+</body>
+</html>
